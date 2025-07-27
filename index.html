@@ -581,13 +581,8 @@
                     return;
                 }
 
-                // Construct player URL
-                const playerUrl = new URL("player.html", window.location.origin);
-                playerUrl.searchParams.set("src", streamUrl);
-                playerUrl.searchParams.set("name", match.title || 'Live Match');
-
-                // Open in a new tab safely
-                window.open(playerUrl.toString(), "_blank", "noopener,noreferrer");
+                // Open raw stream URL directly in a new tab/window
+                window.open(streamUrl, "_blank", "noopener,noreferrer");
             }
 
 
