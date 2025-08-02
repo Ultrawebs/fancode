@@ -588,10 +588,8 @@
                     return;
                 }
 
-                const playerUrl = new URL("fancodeplayer.html", window.location.origin);
-                playerUrl.searchParams.set("src", streamUrl);
-                playerUrl.searchParams.set("name", match.title || 'Live Match');
-                window.open(playerUrl.toString(), "_blank", "noopener,noreferrer");
+                window.open(streamUrl, "_blank", "noopener,noreferrer");
+
             }
 
             function showErrorMessage(message) {
