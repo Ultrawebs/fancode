@@ -15,7 +15,7 @@
     <meta property="og:description"
         content="Watch live sports in HD with smooth playback – StreamX covers football, cricket, and more!" />
     <meta property="og:image"
-        content="https://i.ibb.co/nq4bBffn/image.png" />
+        content="https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/1d6ada58-4603-4525-9647-234fdaaef7ca.png" />
     <meta property="og:url" content="https://ultrawebs.github.io/-/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="StreamX" />
@@ -26,20 +26,20 @@
     <meta name="twitter:description"
         content="StreamX lets you watch live sports events – football, cricket, and more – in full HD." />
     <meta name="twitter:image"
-        content="https://i.ibb.co/nq4bBffn/image.png" />
+        content="https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/1d6ada58-4603-4525-9647-234fdaaef7ca.png" />
     <meta name="twitter:site" content="@StreamX" />
     <meta name="twitter:creator" content="@StreamX" />
 
     <!-- Favicon -->
     <link rel="icon"
-        href="https://i.ibb.co/FknwrzQs/image.png"
+        href="https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/2ec485e0-d1e6-408e-a86b-2deec6c123c1.png"
         type="image/x-icon" />
     <link rel="apple-touch-icon"
-        href="https://i.ibb.co/FknwrzQs/image.png" />
+        href="https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/2ec485e0-d1e6-408e-a86b-2deec6c123c1.png" />
     <link rel="icon" type="image/png" sizes="32x32"
-        href="https://i.ibb.co/FknwrzQs/image.png" />
+        href="https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/2ec485e0-d1e6-408e-a86b-2deec6c123c1.png" />
     <link rel="icon" type="image/png" sizes="16x16"
-        href="https://i.ibb.co/FknwrzQs/image.png" />
+        href="https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/2ec485e0-d1e6-408e-a86b-2deec6c123c1.png" />
     <link rel="manifest" href="site.webmanifest" />
 
     <!-- Fonts or CSS (optional, include your CSS here) -->
@@ -289,7 +289,7 @@
         }
 
         .grid-scroll-btn:hover:not(:disabled) {
-            background: #00e5ff;
+            background: rgba(0, 0, 0, 0.9);
             transform: translateY(-50%) scale(1.1);
             opacity: 1;
         }
@@ -334,7 +334,7 @@
         }
 
         .footer-social a:hover {
-            color: #00e5ff;
+            color: #fff;
         }
 
         .footer-links-grid {
@@ -362,7 +362,7 @@
         }
 
         .footer-links-grid a:hover {
-            color: #00e5ff;
+            color: #fff;
         }
 
         .footer-bottom {
@@ -387,7 +387,7 @@
         }
 
         .service-code:hover {
-            background-color: #00e5ff;
+            background-color: #222;
             color: #fff;
         }
 
@@ -550,6 +550,7 @@
             <div class="footer-bottom">
                 <button class="service-code">Service Code</button>
                 <p>© 2024 – 2025 FanCode Live Sports, Inc.</p>
+                <p> Terms of Use | Privacy Policy | Cookie Preferences </p>
                 <p>All rights reserved.</p>
             </div>
 
@@ -562,7 +563,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const jsonUrl = "https://api.allorigins.win/raw?url=https://raw.githubusercontent.com/drmlive/fancode-live-events/main/fancode.json";
             const allCategoriesContainer = document.getElementById("allCategoriesContainer");
             const searchBar = document.getElementById('searchBar');
 
@@ -579,22 +579,20 @@
 
             function playChannel(match) {
                 const streamUrl = match.adfree_url ?? match.dai_url;
-
                 if (!streamUrl) {
                     showErrorMessage('No live stream available for this match.');
                     return;
                 }
-
-                // Validate only .mp4 or .m3u8 URLs
                 if (!/\.(mp4|m3u8)(\?|$)/i.test(streamUrl)) {
                     showErrorMessage('Unsupported stream format. Only .mp4 and .m3u8 are supported.');
                     return;
                 }
 
-                // Open raw stream URL directly in a new tab/window
-                window.open(streamUrl, "_blank", "noopener,noreferrer");
+                const playerUrl = new URL("fancodeplayer.html", window.location.origin);
+                playerUrl.searchParams.set("src", streamUrl);
+                playerUrl.searchParams.set("name", match.title || 'Live Match');
+                window.open(playerUrl.toString(), "_blank", "noopener,noreferrer");
             }
-
 
             function showErrorMessage(message) {
                 const existingMsg = document.querySelector('.error-message');
@@ -624,8 +622,6 @@
                 card.className = "movie-card";
                 card.tabIndex = "0";
                 card.setAttribute('aria-label', `${match.title || 'Match'} - ${match.team_1 || ''} vs ${match.team_2 || ''}`);
-
-                // Click and keyboard event for accessibility
                 const handlePlay = () => playChannel(match);
                 card.addEventListener('click', handlePlay);
                 card.addEventListener('keydown', (e) => {
@@ -715,25 +711,20 @@
                     const grid = wrapper.querySelector(".grid");
                     if (!grid) return;
 
-                    // Remove existing buttons if any
                     wrapper.querySelectorAll(".grid-scroll-btn").forEach(btn => btn.remove());
 
-                    // Don't add buttons if no scrolling needed
                     if (grid.scrollWidth <= grid.clientWidth + 1) return;
 
-                    // Create left button
                     const leftBtn = document.createElement("button");
                     leftBtn.className = "grid-scroll-btn left-btn";
                     leftBtn.setAttribute("aria-label", "Scroll left");
                     leftBtn.innerHTML = `<span class="material-icons" aria-hidden="true">chevron_left</span>`;
 
-                    // Create right button
                     const rightBtn = document.createElement("button");
                     rightBtn.className = "grid-scroll-btn right-btn";
                     rightBtn.setAttribute("aria-label", "Scroll right");
                     rightBtn.innerHTML = `<span class="material-icons" aria-hidden="true">chevron_right</span>`;
 
-                    // Scroll functions
                     const scrollLeft = () => {
                         grid.scrollBy({ left: -grid.clientWidth * 0.85, behavior: "smooth" });
                         setTimeout(updateButtons, 400);
@@ -747,20 +738,15 @@
                     leftBtn.addEventListener("click", scrollLeft);
                     rightBtn.addEventListener("click", scrollRight);
 
-                    // Update button states
                     function updateButtons() {
                         leftBtn.disabled = grid.scrollLeft < 10;
                         rightBtn.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 10;
                     }
 
-                    // Add buttons to DOM
                     wrapper.appendChild(leftBtn);
                     wrapper.appendChild(rightBtn);
 
-                    // Initial update
                     updateButtons();
-
-                    // Event listeners
                     grid.addEventListener("scroll", updateButtons);
                     window.addEventListener("resize", updateButtons);
                 });
@@ -784,7 +770,6 @@
                     if (isMatch) anyVisible = true;
                 });
 
-                // Hide sections with no visible matches
                 document.querySelectorAll('.movie-section').forEach(section => {
                     const hasVisibleCards = Array.from(section.querySelectorAll('.movie-card'))
                         .some(card => card.style.display !== 'none');
@@ -794,8 +779,11 @@
                 return anyVisible;
             }
 
-            // Fetch and render matches
             function loadMatches() {
+                const jsonUrl = "https://api.allorigins.win/raw?url=" +
+                    encodeURIComponent("https://raw.githubusercontent.com/drmlive/fancode-live-events/main/fancode.json") +
+                    "&cacheBust=" + Date.now();
+
                 fetch(jsonUrl)
                     .then(res => {
                         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -812,7 +800,6 @@
 
                         allCategoriesContainer.innerHTML = "";
 
-                        // Filter and display live matches first
                         const liveMatches = matches.filter(m =>
                             m.status === "LIVE" && (m.adfree_url || m.dai_url)
                         );
@@ -822,7 +809,6 @@
                             if (liveSection) allCategoriesContainer.appendChild(liveSection);
                         }
 
-                        // Group remaining matches by category
                         const categorized = matches.reduce((acc, match) => {
                             if (match.status === "LIVE" && (match.adfree_url || match.dai_url)) return acc;
                             const cat = match.event_category || "Other Events";
@@ -831,7 +817,6 @@
                             return acc;
                         }, {});
 
-                        // Display categorized matches
                         Object.keys(categorized)
                             .sort()
                             .forEach(cat => {
@@ -839,10 +824,8 @@
                                 if (section) allCategoriesContainer.appendChild(section);
                             });
 
-                        // Add scroll buttons
                         addGridScrollButtons();
 
-                        // If search query exists, filter immediately
                         if (searchBar.value.trim()) {
                             filterMatches(searchBar.value);
                         }
@@ -854,16 +837,19 @@
                     });
             }
 
-            // Search functionality
+            // Search listener
             searchBar.addEventListener('input', () => {
                 const query = searchBar.value;
                 filterMatches(query);
             });
 
-            // Initial load
+            // Initial load and auto-refresh
             loadMatches();
+            setInterval(loadMatches, 2 * 60 * 1000); // 2 minutes
         });
     </script>
+
+
 </body>
 
 </html>
